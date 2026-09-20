@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volga Ltd - Next-Gen IT Solutions</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <canvas id="bgCanvas"></canvas>
+
+  <header>
+    <div class="logo">
+      <img src="logo.png" alt="Volga Ltd Logo" class="logo-img">
+      <span>Volga Ltd</span>
+    </div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
+        <span class="theme-icon">☀️</span>
+        <span class="theme-text">Light</span>
+      </button>
+    </nav>
+  </header>
+
+  <section id="home" class="hero">
+    <div class="badge">Next-Gen Tech Hub</div>
+    <h1>Innovative IT Solutions</h1>
+    <h2>We specialize in <span class="typewriter" id="typewriter"></span></h2>
+    <div class="hero-actions">
+      <a href="#products" class="btn primary-btn">Explore Projects</a>
+      <a href="#contact" class="btn secondary-btn">Get In Touch</a>
+    </div>
+  </section>
+
+  <section id="products">
+    <div class="section-title">
+      <h2>Our Portfolio & Projects</h2>
+      <p>Tap on any project card to open interactive specifications and view project source code.</p>
+    </div>
+    
+    <div class="products-grid">
+      <button class="card project-btn" data-project="0">
+        <div class="card-badge">ML / Healthcare</div>
+        <h3>Cancer Diagnosis System</h3>
+        <p>TCGA barcode genomic classification model leveraging machine learning algorithms.</p>
+        <span class="card-link-text">View Details &rarr;</span>
+      </button>
+
+      <button class="card project-btn" data-project="1">
+        <div class="card-badge">IoT / Hardware</div>
+        <h3>RUDRA - Drowsiness Detection</h3>
+        <p>Real-time driver alert system powered by Arduino Nano and optical blink sensors.</p>
+        <span class="card-link-text">View Details &rarr;</span>
+      </button>
+
+      <button class="card project-btn" data-project="2">
+        <div class="card-badge">Data Science / Security</div>
+        <h3>Credit Card Fraud Detection</h3>
+        <p>Predictive anomaly detection model trained using Scikit-learn and logistic regression.</p>
+        <span class="card-link-text">View Details &rarr;</span>
+      </button>
+
+      <button class="card project-btn" data-project="3">
+        <div class="card-badge">Full Stack / Cloud</div>
+        <h3>E-Voting Application</h3>
+        <p>Hosted web platform featuring OTP email verification and real-time admin metrics.</p>
+        <span class="card-link-text">View Details &rarr;</span>
+      </button>
+    </div>
+  </section>
+
+  <div class="modal" id="projectModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h3 id="modalTitle">Project Title</h3>
+      <p id="modalDescription">Project details go here...</p>
+
+      <div class="modal-tech">
+        <strong>Tech Stack:</strong> <span id="modalTech"></span>
+      </div>
+
+      <a href="#" id="modalLink" target="_blank" class="project-link-btn">View Repository / Live App</a>
+    </div>
+  </div>
+
+  <section id="contact">
+    <div class="section-title">
+      <h2>Contact Us</h2>
+      <p>Send us a message and our engineering team will respond shortly.</p>
+    </div>
+
+    <div class="contact-wrapper">
+      <div class="contact-info-card">
+        <h3>Direct Communications</h3>
+        <div class="info-item">
+          <span class="info-icon">📞</span>
+          <div>
+            <strong>Direct Call:</strong>
+            <p>+91 98765 43210</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">✉️</span>
+          <div>
+            <strong>Email Us:</strong>
+            <p>contact@volgaltd.com</p>
+          </div>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">🌐</span>
+          <div>
+            <strong>Global Hub:</strong>
+            <p>24/7 Digital Operations</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your Full Name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+        </div>
+        <div class="form-group">
+          <label for="phone">Contact Number</label>
+          <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" required placeholder="Type your message here..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>This site is built and maintained by <strong>Volga Ltd</strong> &copy; 2026</p>
+  </footer>
+
+  <button class="chatbot-toggle" id="chatToggle">💬 Chat</button>
+
+  <div class="chatbot-box" id="chatBox">
+    <div class="chat-header">
+      <span>Volga Support Bot</span>
+      <button class="close-chat" id="closeChat" aria-label="Close Chat">&times;</button>
+    </div>
+    <div class="chat-logs" id="chatLogs">
+      <div class="msg bot-msg">Hello! I am Volga's personal AI-powered chat bot. How may I help you?</div>
+    </div>
+    <div class="chat-options" id="chatOptions"></div>
+    <div class="chat-input-area">
+      <input type="text" id="userInput" placeholder="Ask a question..." autocomplete="off">
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
