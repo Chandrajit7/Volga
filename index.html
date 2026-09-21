@@ -3,164 +3,259 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volga Ltd - Next-Gen IT Solutions</title>
+  <title>Volga Ltd // Cybernetic Systems</title>
   <link rel="icon" type="image/x-icon" href="volga logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-theme="dark">
 
+  <!-- Interactive Matrix Particle Canvas -->
   <canvas id="bgCanvas"></canvas>
+  <div class="scanline"></div>
+  <div class="cyber-vignette"></div>
 
-  <header>
-    <div class="logo">
-      <img src="volga logo.png" alt="Volga Ltd Logo" class="logo-img">
-      <span>Volga Ltd</span>
+  <!-- HUD Top System Bar -->
+<div class="hud-bar">
+  <div class="hud-left">
+    <span class="hud-dot"></span>
+    <div class="hud-item">
+      <span class="hud-label">SYSTEM_STATUS:</span>
+      <span class="hud-value">ONLINE</span>
     </div>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#products">Products</a>
-      <a href="#contact">Contact</a>
-      <button class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme">
-        <span class="theme-icon">☀️</span>
-        <span class="theme-text">Light</span>
-      </button>
-    </nav>
-  </header>
-
-  <section id="home" class="hero">
-    <div class="badge">Next-Gen Tech Hub</div>
-    <h1>Innovative IT Solutions</h1>
-    <h2>We specialize in <span class="typewriter" id="typewriter"></span></h2>
-    <div class="hero-actions">
-      <a href="#products" class="btn primary-btn">Explore Projects</a>
-      <a href="#contact" class="btn secondary-btn">Get In Touch</a>
-    </div>
-  </section>
-
-  <section id="products">
-    <div class="section-title">
-      <h2>Our Portfolio & Projects</h2>
-      <p>Tap on any project card to open interactive specifications and view project source code.</p>
-    </div>
-    
-    <div class="products-grid">
-      <button class="card project-btn" data-project="0">
-        <div class="card-badge">ML / Healthcare</div>
-        <h3>Cancer Diagnosis System</h3>
-        <p>TCGA barcode genomic classification model leveraging machine learning algorithms.</p>
-        <span class="card-link-text">View Details &rarr;</span>
-      </button>
-
-      <button class="card project-btn" data-project="1">
-        <div class="card-badge">IoT / Hardware</div>
-        <h3>RUDRA - Drowsiness Detection</h3>
-        <p>Real-time driver alert system powered by Arduino Nano and optical blink sensors.</p>
-        <span class="card-link-text">View Details &rarr;</span>
-      </button>
-
-      <button class="card project-btn" data-project="2">
-        <div class="card-badge">Data Science / Security</div>
-        <h3>Credit Card Fraud Detection</h3>
-        <p>Predictive anomaly detection model trained using Scikit-learn and logistic regression.</p>
-        <span class="card-link-text">View Details &rarr;</span>
-      </button>
-
-      <button class="card project-btn" data-project="3">
-        <div class="card-badge">Full Stack / Cloud</div>
-        <h3>E-Voting Application</h3>
-        <p>Hosted web platform featuring OTP email verification and real-time admin metrics.</p>
-        <span class="card-link-text">View Details &rarr;</span>
-      </button>
-    </div>
-  </section>
-
-  <div class="modal" id="projectModal">
-    <div class="modal-content">
-      <span class="close-modal" id="closeModal">&times;</span>
-      <h3 id="modalTitle">Project Title</h3>
-      <p id="modalDescription">Project details go here...</p>
-
-      <div class="modal-tech">
-        <strong>Tech Stack:</strong> <span id="modalTech"></span>
-      </div>
-
-      <a href="#" id="modalLink" target="_blank" class="project-link-btn">View Repository / Live App</a>
+    <div class="hud-item hide-mobile">
+      <span class="hud-label">LOC:</span>
+      <span class="hud-value" id="hudLocation">LOADING...</span>
     </div>
   </div>
-
-  <section id="contact">
-    <div class="section-title">
-      <h2>Contact Us</h2>
-      <p>Send us a message and our engineering team will respond shortly.</p>
+  <div class="hud-mid">SYS.VER // 0.0.02</div>
+  <div class="hud-right">
+    <div class="hud-item">
+      <span class="hud-label">TIME:</span>
+      <span class="hud-value" id="hudClock">00:00:00</span>
     </div>
+  </div>
+</div>
+<!--Header-->
+  <header class="futuristic-header">
+    <div class="logo">
+      <div class="logo-hex">
+        <img src="volga logo.png" alt="Volga Ltd Logo" class="logo-img">
+      </div>
+      <div class="logo-text">
+        <span class="brand-name" data-text="VOLGA_LTD">VOLGA_LTD</span>
+        <span class="brand-sub">QUANTUM_SYSTEMS</span>
+      </div>
+    </div>
+    
+    <div class="nav-controls">
+      <!-- Theme Toggle Button -->
+      <button class="cyber-btn theme-toggle-btn" id="themeToggle" aria-label="Toggle Core Theme">
+        <span class="btn-glitch"></span>
+        <span class="theme-icon">☀️</span>
+        <span class="theme-text">LIGHT_MODE</span>
+      </button>
 
-    <div class="contact-wrapper">
-      <div class="contact-info-card">
-        <h3>Direct Communications</h3>
-        <div class="info-item">
-          <span class="info-icon">📞</span>
-          <div>
-            <strong>Direct Call:</strong>
-            <p>+91 98765 43210</p>
+      <!-- Three-Dot Dropdown Container -->
+      <div class="dropdown-container">
+        <button class="cyber-btn menu-dots-btn" id="menuDotsBtn" aria-label="Open Navigation Matrix" aria-expanded="false">
+          <span class="dots-icon">⋮</span>
+        </button>
+        <nav class="dropdown-menu cyber-glass" id="dropdownMenu">
+          <a href="#home"><span class="nav-num">01//</span> HOME</a>
+          <a href="#products"><span class="nav-num">02//</span> MATRIX_PROJECTS</a>
+          <a href="#contact"><span class="nav-num">03//</span> COMM_LINK</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="cyber-badge">
+        <span class="badge-pulse"></span>
+        <span class="badge-text">NEXT-GEN QUANTUM HUB</span>
+      </div>
+      
+      <h1 class="glitch-title" data-text="CYBERNETIC MATRIX">CYBERNETIC MATRIX</h1>
+      <h2 class="typewriter-container">
+        <span class="cyber-prompt">> INITIATING MODULE:</span> 
+        <span class="typewriter" id="typewriter"></span>
+      </h2>
+
+      <div class="hero-actions">
+        <a href="#products" class="cyber-btn primary-cyber-btn">
+          <span class="btn-content">INITIALIZE PORTFOLIO</span>
+        </a>
+        <a href="#contact" class="cyber-btn secondary-cyber-btn">
+          <span class="btn-content">ESTABLISH LINK</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Products / Portfolio Section -->
+    <section id="products">
+      <div class="section-title">
+        <div class="cyber-corner-tag">GRID_NODES</div>
+        <h2>SYSTEM_PORTFOLIO</h2>
+        <p>Access neural nodes to load telemetry data and view encryption repositories.</p>
+      </div>
+      
+      <div class="products-grid">
+        <div class="card project-btn cyber-glass" data-project="0" tabindex="0">
+          <div class="card-glow"></div>
+          <div class="card-badge">ML // HEALTHCARE</div>
+          <h3>Cancer Diagnosis System</h3>
+          <p>TCGA barcode genomic classification model leveraging machine learning algorithms.</p>
+          <div class="card-footer">
+            <span class="card-link-text">LAUNCH NODE</span>
+            <span class="cyber-arrow">➔</span>
           </div>
         </div>
-        <div class="info-item">
-          <span class="info-icon">✉️</span>
-          <div>
-            <strong>Email Us:</strong>
-            <p>contact@volgaltd.com</p>
+
+        <div class="card project-btn cyber-glass" data-project="1" tabindex="0">
+          <div class="card-glow"></div>
+          <div class="card-badge">IOT // HARDWARE</div>
+          <h3>RUDRA - Drowsiness Detection</h3>
+          <p>Real-time driver alert system powered by Arduino Nano and optical blink sensors.</p>
+          <div class="card-footer">
+            <span class="card-link-text">LAUNCH NODE</span>
+            <span class="cyber-arrow">➔</span>
           </div>
         </div>
-        <div class="info-item">
-          <span class="info-icon">🌐</span>
-          <div>
-            <strong>Global Hub:</strong>
-            <p>24/7 Digital Operations</p>
+
+        <div class="card project-btn cyber-glass" data-project="2" tabindex="0">
+          <div class="card-glow"></div>
+          <div class="card-badge">DATA // SECURITY</div>
+          <h3>Credit Card Fraud Detection</h3>
+          <p>Predictive anomaly detection model trained using Scikit-learn and logistic regression.</p>
+          <div class="card-footer">
+            <span class="card-link-text">LAUNCH NODE</span>
+            <span class="cyber-arrow">➔</span>
+          </div>
+        </div>
+
+        <div class="card project-btn cyber-glass" data-project="3" tabindex="0">
+          <div class="card-glow"></div>
+          <div class="card-badge">FULLSTACK // CLOUD</div>
+          <h3>E-Voting Application</h3>
+          <p>Hosted web platform featuring OTP email verification and real-time admin metrics.</p>
+          <div class="card-footer">
+            <span class="card-link-text">LAUNCH NODE</span>
+            <span class="cyber-arrow">➔</span>
           </div>
         </div>
       </div>
+    </section>
 
-      <form class="contact-form" action="https://formspree.io/f/myezylpa" method="POST">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" required placeholder="Your Full Name">
+    <!-- Modal Section -->
+    <div class="modal" id="projectModal" aria-hidden="true" role="dialog">
+      <div class="modal-content cyber-glass">
+        <button class="close-modal" id="closeModal" aria-label="Close Interface">&times;</button>
+        <div class="modal-header-tag">NODE_TELEMETRY</div>
+        <h3 id="modalTitle">Project Title</h3>
+        <p id="modalDescription">Project details go here...</p>
+
+        <div class="modal-tech">
+          <span class="tech-label">CORE_STACK:</span>
+          <span id="modalTech" class="tech-value"></span>
         </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required placeholder="your.email@example.com">
-        </div>
-        <div class="form-group">
-          <label for="phone">Contact Number</label>
-          <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
-        </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="4" required placeholder="Type your message here..."></textarea>
-        </div>
-        <button type="submit" class="submit-btn">Send Message</button>
-      </form>
+
+        <a href="#" id="modalLink" target="_blank" rel="noopener noreferrer" class="cyber-btn primary-cyber-btn modal-btn">
+          <span class="btn-content">ACCESS REPOSITORY</span>
+        </a>
+      </div>
     </div>
-  </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+      <div class="section-title">
+        <div class="cyber-corner-tag">ENCRYPTED_CHANNEL</div>
+        <h2>COMMUNICATION_LINK</h2>
+        <p>Send encrypted transmissions directly to our central intelligence node.</p>
+      </div>
+
+      <div class="contact-wrapper">
+        <div class="contact-info-card cyber-glass">
+          <h3>DIRECT_COMM_CHANNELS</h3>
+          
+          <div class="info-item">
+            <div class="info-icon">⚡</div>
+            <div>
+              <strong>DIRECT LINE:</strong>
+              <p>+91 98765 43210</p>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <div class="info-icon">📡</div>
+            <div>
+              <strong>TRANSMISSION ENCRYPTED:</strong>
+              <p>contact@volgaltd.com</p>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">🌐</div>
+            <div>
+              <strong>GLOBAL CORE:</strong>
+              <p>24/7 Quantum Operations</p>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form cyber-glass" action="https://formspree.io/f/myezylpa" method="POST">
+          <div class="form-group">
+            <label for="name">IDENTIFIER // NAME</label>
+            <input type="text" id="name" name="name" required placeholder="User Full Name">
+          </div>
+          <div class="form-group">
+            <label for="email">SIGNAL ADDR // EMAIL</label>
+            <input type="email" id="email" name="email" required placeholder="user.name@network.com">
+          </div>
+          <div class="form-group">
+            <label for="phone">COMM NUMBER</label>
+            <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
+          </div>
+          <div class="form-group">
+            <label for="message">DATA PAYLOAD // MESSAGE</label>
+            <textarea id="message" name="message" rows="4" required placeholder="Type payload contents..."></textarea>
+          </div>
+          <button type="submit" class="cyber-btn primary-cyber-btn submit-btn">
+            <span class="btn-content">TRANSMIT DATA</span>
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>This site is built and maintained by <strong>Volga Ltd</strong> &copy; 2026 V: 0.0.01</p>
+    <div class="footer-content">
+      <p>SYSTEM ARCHITECTURE BY <strong>VOLGA LTD</strong> &copy; 2026 // ALL RIGHTS RESERVED</p>
+    </div>
   </footer>
 
-  <button class="chatbot-toggle" id="chatToggle">💬 Chat</button>
+  <!-- Chatbot Interface -->
+  <button class="chatbot-toggle cyber-btn" id="chatToggle" aria-label="Toggle Neural Assistant">
+    <span class="chat-icon">🤖</span> AI_ASSISTANT
+  </button>
 
-  <div class="chatbot-box" id="chatBox">
+  <div class="chatbot-box cyber-glass" id="chatBox" aria-hidden="true">
     <div class="chat-header">
-      <span>Volga Support Bot</span>
-      <button class="close-chat" id="closeChat" aria-label="Close Chat">&times;</button>
+      <div class="chat-title"><span class="online-indicator"></span> VOLGA_AI v4.0</div>
+      <button class="close-chat" id="closeChat" aria-label="Close AI Terminal">&times;</button>
     </div>
     <div class="chat-logs" id="chatLogs">
-      <div class="msg bot-msg">Hello! I am Anubis Volga's personal AI-powered chatbot. How may I help you?</div>
+      <div class="msg bot-msg">System initialized. Greetings. How can Volga Neural Intelligence assist you today?</div>
     </div>
     <div class="chat-options" id="chatOptions"></div>
-    <div class="chat-input-area">
-      <input type="text" id="userInput" placeholder="Ask a question..." autocomplete="off">
-      <button id="sendBtn">Send</button>
-    </div>
+    <form class="chat-input-area" id="chatForm">
+      <input type="text" id="userInput" placeholder="Type prompt..." autocomplete="off">
+      <button type="submit" id="sendBtn">SEND</button>
+    </form>
   </div>
 
   <script src="script.js"></script>
