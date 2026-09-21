@@ -1,263 +1,754 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Volga Ltd // Cybernetic Systems</title>
-  <link rel="icon" type="image/x-icon" href="volga logo.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body data-theme="dark">
+:root {
+  --bg-color: #02040a;
+  --text: #f3f4f6;
+  --text-muted: #9ca3af;
+  --card-bg: rgba(10, 15, 30, 0.55);
+  --accent: #00f0ff;
+  --accent-alt: #ff0055;
+  --accent-glow: rgba(0, 240, 255, 0.4);
+  --header-bg: rgba(2, 4, 10, 0.8);
+  --border: rgba(0, 240, 255, 0.25);
+  --border-bright: rgba(0, 240, 255, 0.85);
+  --card-shadow: 0 0 35px rgba(0, 240, 255, 0.15);
+  --input-bg: rgba(10, 15, 30, 0.85);
+  --grid-line: rgba(0, 240, 255, 0.07);
+  --font-title: 'Orbitron', sans-serif;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+}
 
-  <!-- Interactive Matrix Particle Canvas -->
-  <canvas id="bgCanvas"></canvas>
-  <div class="scanline"></div>
-  <div class="cyber-vignette"></div>
+[data-theme="light"] {
+  --bg-color: #f0f4f9;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --accent: #0284c7;
+  --accent-alt: #d97706;
+  --accent-glow: rgba(2, 132, 199, 0.3);
+  --header-bg: rgba(240, 244, 249, 0.85);
+  --border: rgba(2, 132, 199, 0.3);
+  --border-bright: rgba(2, 132, 199, 0.9);
+  --card-shadow: 0 10px 30px rgba(2, 132, 199, 0.15);
+  --input-bg: rgba(255, 255, 255, 0.95);
+  --grid-line: rgba(2, 132, 199, 0.08);
+}
 
-  <!-- HUD Top System Bar -->
-<div class="hud-bar">
-  <div class="hud-left">
-    <span class="hud-dot"></span>
-    <div class="hud-item">
-      <span class="hud-label">SYSTEM_STATUS:</span>
-      <span class="hud-value">ONLINE</span>
-    </div>
-    <div class="hud-item hide-mobile">
-      <span class="hud-label">LOC:</span>
-      <span class="hud-value" id="hudLocation">LOADING...</span>
-    </div>
-  </div>
-  <div class="hud-mid">SYS.VER // 0.0.02</div>
-  <div class="hud-right">
-    <div class="hud-item">
-      <span class="hud-label">TIME:</span>
-      <span class="hud-value" id="hudClock">00:00:00</span>
-    </div>
-  </div>
-</div>
-<!--Header-->
-  <header class="futuristic-header">
-    <div class="logo">
-      <div class="logo-hex">
-        <img src="volga logo.png" alt="Volga Ltd Logo" class="logo-img">
-      </div>
-      <div class="logo-text">
-        <span class="brand-name" data-text="VOLGA_LTD">VOLGA_LTD</span>
-        <span class="brand-sub">QUANTUM_SYSTEMS</span>
-      </div>
-    </div>
-    
-    <div class="nav-controls">
-      <!-- Theme Toggle Button -->
-      <button class="cyber-btn theme-toggle-btn" id="themeToggle" aria-label="Toggle Core Theme">
-        <span class="btn-glitch"></span>
-        <span class="theme-icon">☀️</span>
-        <span class="theme-text">LIGHT_MODE</span>
-      </button>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-      <!-- Three-Dot Dropdown Container -->
-      <div class="dropdown-container">
-        <button class="cyber-btn menu-dots-btn" id="menuDotsBtn" aria-label="Open Navigation Matrix" aria-expanded="false">
-          <span class="dots-icon">⋮</span>
-        </button>
-        <nav class="dropdown-menu cyber-glass" id="dropdownMenu">
-          <a href="#home"><span class="nav-num">01//</span> HOME</a>
-          <a href="#products"><span class="nav-num">02//</span> MATRIX_PROJECTS</a>
-          <a href="#contact"><span class="nav-num">03//</span> COMM_LINK</a>
-        </nav>
-      </div>
-    </div>
-  </header>
+body {
+  background-color: var(--bg-color);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  padding-top: 90px;
+}
 
-  <main>
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="cyber-badge">
-        <span class="badge-pulse"></span>
-        <span class="badge-text">NEXT-GEN QUANTUM HUB</span>
-      </div>
-      
-      <h1 class="glitch-title" data-text="CYBERNETIC MATRIX">CYBERNETIC MATRIX</h1>
-      <h2 class="typewriter-container">
-        <span class="cyber-prompt">> INITIATING MODULE:</span> 
-        <span class="typewriter" id="typewriter"></span>
-      </h2>
+/* 3D Grid Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0;
+  width: 200vw; height: 200vh;
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 60px 60px;
+  transform: translateY(-20%) rotateX(45deg);
+  transform-origin: top center;
+  z-index: -2;
+  pointer-events: none;
+  animation: gridMove 20s linear infinite;
+}
 
-      <div class="hero-actions">
-        <a href="#products" class="cyber-btn primary-cyber-btn">
-          <span class="btn-content">INITIALIZE PORTFOLIO</span>
-        </a>
-        <a href="#contact" class="cyber-btn secondary-cyber-btn">
-          <span class="btn-content">ESTABLISH LINK</span>
-        </a>
-      </div>
-    </section>
+@keyframes gridMove {
+  0% { transform: translateY(-20%) rotateX(45deg) translateY(0); }
+  100% { transform: translateY(-20%) rotateX(45deg) translateY(60px); }
+}
 
-    <!-- Products / Portfolio Section -->
-    <section id="products">
-      <div class="section-title">
-        <div class="cyber-corner-tag">GRID_NODES</div>
-        <h2>SYSTEM_PORTFOLIO</h2>
-        <p>Access neural nodes to load telemetry data and view encryption repositories.</p>
-      </div>
-      
-      <div class="products-grid">
-        <div class="card project-btn cyber-glass" data-project="0" tabindex="0">
-          <div class="card-glow"></div>
-          <div class="card-badge">ML // HEALTHCARE</div>
-          <h3>Cancer Diagnosis System</h3>
-          <p>TCGA barcode genomic classification model leveraging machine learning algorithms.</p>
-          <div class="card-footer">
-            <span class="card-link-text">LAUNCH NODE</span>
-            <span class="cyber-arrow">➔</span>
-          </div>
-        </div>
+/* Glowing Vignette */
+.cyber-vignette {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: 
+    radial-gradient(circle at 50% 30%, var(--accent-glow) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.85) 100%);
+  pointer-events: none;
+  z-index: -1;
+  transition: background 0.4s ease;
+}
 
-        <div class="card project-btn cyber-glass" data-project="1" tabindex="0">
-          <div class="card-glow"></div>
-          <div class="card-badge">IOT // HARDWARE</div>
-          <h3>RUDRA - Drowsiness Detection</h3>
-          <p>Real-time driver alert system powered by Arduino Nano and optical blink sensors.</p>
-          <div class="card-footer">
-            <span class="card-link-text">LAUNCH NODE</span>
-            <span class="cyber-arrow">➔</span>
-          </div>
-        </div>
+/* CRT Scanlines */
+.scanline {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.3) 51%);
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 99;
+  opacity: 0.35;
+}
 
-        <div class="card project-btn cyber-glass" data-project="2" tabindex="0">
-          <div class="card-glow"></div>
-          <div class="card-badge">DATA // SECURITY</div>
-          <h3>Credit Card Fraud Detection</h3>
-          <p>Predictive anomaly detection model trained using Scikit-learn and logistic regression.</p>
-          <div class="card-footer">
-            <span class="card-link-text">LAUNCH NODE</span>
-            <span class="cyber-arrow">➔</span>
-          </div>
-        </div>
+#bgCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+}
 
-        <div class="card project-btn cyber-glass" data-project="3" tabindex="0">
-          <div class="card-glow"></div>
-          <div class="card-badge">FULLSTACK // CLOUD</div>
-          <h3>E-Voting Application</h3>
-          <p>Hosted web platform featuring OTP email verification and real-time admin metrics.</p>
-          <div class="card-footer">
-            <span class="card-link-text">LAUNCH NODE</span>
-            <span class="cyber-arrow">➔</span>
-          </div>
-        </div>
-      </div>
-    </section>
+/* HUD System Bar */
+.hud-bar {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.88);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  z-index: 1002;
+}
 
-    <!-- Modal Section -->
-    <div class="modal" id="projectModal" aria-hidden="true" role="dialog">
-      <div class="modal-content cyber-glass">
-        <button class="close-modal" id="closeModal" aria-label="Close Interface">&times;</button>
-        <div class="modal-header-tag">NODE_TELEMETRY</div>
-        <h3 id="modalTitle">Project Title</h3>
-        <p id="modalDescription">Project details go here...</p>
+.hud-left, .hud-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
-        <div class="modal-tech">
-          <span class="tech-label">CORE_STACK:</span>
-          <span id="modalTech" class="tech-value"></span>
-        </div>
+.hud-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--accent);
+  animation: pulse 1.5s infinite alternate;
+}
 
-        <a href="#" id="modalLink" target="_blank" rel="noopener noreferrer" class="cyber-btn primary-cyber-btn modal-btn">
-          <span class="btn-content">ACCESS REPOSITORY</span>
-        </a>
-      </div>
-    </div>
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 
-    <!-- Contact Section -->
-    <section id="contact">
-      <div class="section-title">
-        <div class="cyber-corner-tag">ENCRYPTED_CHANNEL</div>
-        <h2>COMMUNICATION_LINK</h2>
-        <p>Send encrypted transmissions directly to our central intelligence node.</p>
-      </div>
+.hud-label {
+  color: var(--text-muted);
+}
 
-      <div class="contact-wrapper">
-        <div class="contact-info-card cyber-glass">
-          <h3>DIRECT_COMM_CHANNELS</h3>
-          
-          <div class="info-item">
-            <div class="info-icon">⚡</div>
-            <div>
-              <strong>DIRECT LINE:</strong>
-              <p>+91 98765 43210</p>
-            </div>
-          </div>
-          
-          <div class="info-item">
-            <div class="info-icon">📡</div>
-            <div>
-              <strong>TRANSMISSION ENCRYPTED:</strong>
-              <p>contact@volgaltd.com</p>
-            </div>
-          </div>
+@keyframes pulse {
+  0% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
 
-          <div class="info-item">
-            <div class="info-icon">🌐</div>
-            <div>
-              <strong>GLOBAL CORE:</strong>
-              <p>24/7 Quantum Operations</p>
-            </div>
-          </div>
-        </div>
+/* Glassmorphism Utility */
+.cyber-glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--border);
+  box-shadow: var(--card-shadow);
+  position: relative;
+}
 
-        <form class="contact-form cyber-glass" action="https://formspree.io/f/myezylpa" method="POST">
-          <div class="form-group">
-            <label for="name">IDENTIFIER // NAME</label>
-            <input type="text" id="name" name="name" required placeholder="User Full Name">
-          </div>
-          <div class="form-group">
-            <label for="email">SIGNAL ADDR // EMAIL</label>
-            <input type="email" id="email" name="email" required placeholder="user.name@network.com">
-          </div>
-          <div class="form-group">
-            <label for="phone">COMM NUMBER</label>
-            <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210">
-          </div>
-          <div class="form-group">
-            <label for="message">DATA PAYLOAD // MESSAGE</label>
-            <textarea id="message" name="message" rows="4" required placeholder="Type payload contents..."></textarea>
-          </div>
-          <button type="submit" class="cyber-btn primary-cyber-btn submit-btn">
-            <span class="btn-content">TRANSMIT DATA</span>
-          </button>
-        </form>
-      </div>
-    </section>
-  </main>
+.cyber-glass::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
 
-  <footer>
-    <div class="footer-content">
-      <p>SYSTEM ARCHITECTURE BY <strong>VOLGA LTD</strong> &copy; 2026 // ALL RIGHTS RESERVED</p>
-    </div>
-  </footer>
+/* Header */
+header.futuristic-header {
+  position: fixed;
+  top: 24px; left: 0; width: 100%;
+  height: 70px;
+  background: var(--header-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 1000;
+}
 
-  <!-- Chatbot Interface -->
-  <button class="chatbot-toggle cyber-btn" id="chatToggle" aria-label="Toggle Neural Assistant">
-    <span class="chat-icon">🤖</span> AI_ASSISTANT
-  </button>
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-  <div class="chatbot-box cyber-glass" id="chatBox" aria-hidden="true">
-    <div class="chat-header">
-      <div class="chat-title"><span class="online-indicator"></span> VOLGA_AI v4.0</div>
-      <button class="close-chat" id="closeChat" aria-label="Close AI Terminal">&times;</button>
-    </div>
-    <div class="chat-logs" id="chatLogs">
-      <div class="msg bot-msg">System initialized. Greetings. How can Volga Neural Intelligence assist you today?</div>
-    </div>
-    <div class="chat-options" id="chatOptions"></div>
-    <form class="chat-input-area" id="chatForm">
-      <input type="text" id="userInput" placeholder="Type prompt..." autocomplete="off">
-      <button type="submit" id="sendBtn">SEND</button>
-    </form>
-  </div>
+.logo-hex {
+  width: 42px; height: 42px;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: var(--accent);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+}
 
-  <script src="script.js"></script>
-</body>
-</html>
+.logo-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-title);
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: var(--accent);
+  letter-spacing: 2px;
+}
+
+.brand-sub {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cyber-btn {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.cyber-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+  transform: translateY(-2px);
+}
+
+.theme-toggle-btn {
+  padding: 0.5rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-container {
+  position: relative;
+}
+
+.menu-dots-btn {
+  width: 42px; height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 55px; right: 0;
+  min-width: 200px;
+  flex-direction: column;
+  z-index: 1001;
+  clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+}
+
+.dropdown-menu.show {
+  display: flex;
+  animation: dropIn 0.3s cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-menu a {
+  color: var(--text);
+  text-decoration: none;
+  padding: 1rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+  background: var(--accent-glow);
+  color: var(--accent);
+  padding-left: 1.6rem;
+}
+
+.nav-num {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* Sections */
+section {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero {
+  min-height: calc(85vh - 90px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.cyber-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.4rem 1.2rem;
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+  clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+}
+
+.badge-pulse {
+  width: 8px; height: 8px;
+  background-color: var(--accent);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent);
+}
+
+.glitch-title {
+  font-family: var(--font-title);
+  font-size: 4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--text);
+  text-shadow: 0 0 20px var(--accent-glow);
+  margin-bottom: 1rem;
+}
+
+.typewriter-container {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+.cyber-prompt {
+  color: var(--accent-alt);
+}
+
+.typewriter {
+  color: var(--accent);
+  font-weight: bold;
+  border-right: 2px solid var(--accent);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.primary-cyber-btn {
+  padding: 1rem 2.2rem;
+  background: var(--accent);
+  color: #000;
+  font-weight: 900;
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+}
+
+.primary-cyber-btn:hover {
+  background: var(--text);
+  color: #000;
+  box-shadow: 0 0 30px var(--accent);
+}
+
+.secondary-cyber-btn {
+  padding: 1rem 2.2rem;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.cyber-corner-tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent-alt);
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.section-title h2 {
+  font-family: var(--font-title);
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+}
+
+.section-title p {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  padding: 2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 15px; height: 15px;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+
+.card-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.card h3 {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.card p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--border-bright);
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+
+.card:hover .cyber-arrow {
+  transform: translateX(6px);
+}
+
+.cyber-arrow {
+  transition: transform 0.3s ease;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(12px);
+}
+
+.modal-content {
+  padding: 3rem;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+}
+
+.modal-header-tag {
+  font-family: var(--font-mono);
+  color: var(--accent);
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.close-modal {
+  position: absolute;
+  top: 15px; right: 20px;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.modal-tech {
+  margin: 1.5rem 0 2rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+}
+
+.tech-label {
+  color: var(--accent-alt);
+  margin-right: 8px;
+}
+
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 2.5rem;
+}
+
+.contact-info-card {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact-info-card h3 {
+  font-family: var(--font-title);
+  font-size: 1.2rem;
+  color: var(--accent);
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+  background: var(--accent-glow);
+  padding: 0.8rem;
+  border: 1px solid var(--accent);
+}
+
+.contact-form {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.form-group input, .form-group textarea {
+  padding: 1rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.chatbot-toggle {
+  position: fixed;
+  bottom: 30px; right: 30px;
+  padding: 1rem 1.5rem;
+  z-index: 1500;
+}
+
+.chatbot-box {
+  position: fixed;
+  bottom: 95px; right: 30px;
+  width: 380px; height: 500px;
+  display: none;
+  flex-direction: column;
+  z-index: 1500;
+}
+
+.chat-header {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-title);
+  font-size: 0.9rem;
+}
+
+.online-indicator {
+  display: inline-block;
+  width: 8px; height: 8px;
+  background: #00ff66;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00ff66;
+}
+
+.close-chat {
+  background: none; border: none;
+  color: var(--text); font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.chat-logs {
+  flex: 1; padding: 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.msg {
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+  max-width: 85%;
+  line-height: 1.4;
+}
+
+.bot-msg {
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid var(--border);
+  align-self: flex-start;
+}
+
+.user-msg {
+  background: var(--accent);
+  color: #000;
+  font-weight: bold;
+  align-self: flex-end;
+}
+
+.chat-options {
+  padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--border);
+  max-height: 130px;
+  overflow-y: auto;
+}
+
+.option-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.option-btn:hover {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.chat-input-area {
+  display: flex;
+  padding: 0.8rem;
+  border-top: 1px solid var(--border);
+  gap: 8px;
+}
+
+.chat-input-area input {
+  flex: 1; padding: 0.6rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+  outline: none;
+}
+
+.chat-input-area button {
+  background: var(--accent);
+  color: #000; border: none;
+  padding: 0.6rem 1rem;
+  font-family: var(--font-mono);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 3rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .glitch-title { font-size: 2.2rem; }
+  .contact-wrapper { grid-template-columns: 1fr; }
+  .chatbot-box { width: calc(100vw - 40px); right: 20px; }
+  .hero-actions { flex-direction: column; width: 100%; }
+  .hud-item.hide-mobile { display: none; }
+}
