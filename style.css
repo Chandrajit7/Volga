@@ -752,3 +752,172 @@ footer {
   .hero-actions { flex-direction: column; width: 100%; }
   .hud-item.hide-mobile { display: none; }
 }
+
+
+
+
+/* ============================================================
+   DONE BY MRIGANKA
+   ============================================================ */
+
+
+/* ============================================================
+   Responsive: Small Laptop (≤1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  /* Reduce heavy section padding on smaller laptops */
+  section {
+    padding: 4.5rem 1.5rem;
+  }
+}
+
+/* ============================================================
+   Responsive: Tablet — additional rules (≤768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Use dvh so hero height accounts for mobile browser chrome */
+  .hero {
+    min-height: calc(85vh - 90px);   /* fallback */
+    min-height: calc(85dvh - 90px); /* modern mobile browsers */
+  }
+
+  /* Heading: fluid scaling instead of a hard 2.2rem jump */
+  .glitch-title {
+    font-size: clamp(1.6rem, 5.5vw, 2.2rem);
+    letter-spacing: 2px;
+  }
+
+  /* Typewriter row: scale down and allow wrapping */
+  .typewriter-container {
+    font-size: 1.1rem;
+    word-break: break-word;
+  }
+
+  /* Section: less vertical padding on tablet */
+  section {
+    padding: 4rem 1.25rem;
+  }
+
+  /* Section heading: fluid */
+  .section-title h2 {
+    font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+  }
+
+  /* Section title: tighter bottom margin */
+  .section-title {
+    margin-bottom: 2.5rem;
+  }
+
+  /* Hero buttons: already stacked full-width by existing rule; center the label */
+  .hero-actions .cyber-btn {
+    text-align: center;
+  }
+
+  /* Contact cards: reduce internal padding */
+  .contact-info-card,
+  .contact-form {
+    padding: 1.5rem;
+  }
+
+  /* Modal: reduce padding for smaller viewports */
+  .modal-content {
+    padding: 2rem 1.5rem;
+  }
+
+  /* Header: hide theme button label text to reclaim horizontal space */
+  .theme-text {
+    display: none;
+  }
+
+  /* HUD bar: reduce padding so content fits */
+  .hud-bar {
+    padding: 0 0.75rem;
+  }
+
+  /* HUD version tag: hide to prevent HUD bar overflow on tablet */
+  .hud-mid {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Responsive: Mobile (≤480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  /* Header: tighter horizontal padding so logo + buttons fit */
+  header.futuristic-header {
+    padding: 0 0.75rem;
+  }
+
+  /* HUD bar: minimal padding and smaller font on phones */
+  .hud-bar {
+    padding: 0 0.4rem;
+    font-size: 0.65rem;
+  }
+
+  /* Section: compact padding for phone */
+  section {
+    padding: 3rem 1rem;
+  }
+
+  /* Hero heading: fluid on small phones, no letter-spacing overflow */
+  .glitch-title {
+    font-size: clamp(1.3rem, 7.5vw, 1.8rem);
+    letter-spacing: 0;
+  }
+
+  /* Typewriter: smaller on phone, less bottom margin */
+  .typewriter-container {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Badge: compact on phone */
+  .cyber-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Cards: reduce internal padding */
+  .card {
+    padding: 1.5rem;
+  }
+
+  /* Contact cards: compact */
+  .contact-info-card,
+  .contact-form {
+    padding: 1.25rem;
+  }
+
+  /* Modal: phone-friendly sizing */
+  .modal-content {
+    padding: 1.5rem 1rem;
+    width: 95%;
+  }
+
+  /* Modal close button: ensure 44px min tap target */
+  .close-modal {
+    top: 10px;
+    right: 12px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Chatbot box: phone-sized, height capped to avoid overflowing screen */
+  .chatbot-box {
+    right: 10px;
+    width: calc(100vw - 20px);
+    height: min(500px, 65vh);
+  }
+
+  /* Chatbot toggle: compact padding and position on small phones */
+  .chatbot-toggle {
+    padding: 0.75rem 1rem;
+    right: 15px;
+    bottom: 20px;
+  }
+}
